@@ -1,38 +1,57 @@
-# Mocking and Patching
+# 🧪 Mocking and Patching 🧪
 
-## Installation and Set Up
-1. You will need Python 3.10.6. Make sure that your `pyenv` installation has this available. 
-1. Fork and clone the repository. 
-1. Create a virtual environment.
-1. Activate the environment and run `pip install -r requirements.txt`
-1. Ensure that you can access the `cruncher` classes in the REPL as shown in the example below.
+![Python](https://img.shields.io/badge/Python-3.10.6-blueviolet)
 
-<br>
+![Pyenv](https://img.shields.io/badge/Pyenv-1.2.30-yellow)
 
-## Sprint
-The `cruncher.py` file contains two classes, `NumberRequester` and `NumberCruncher`. 
+![Requests](https://img.shields.io/badge/Requests-2.26.0-orange)
 
-The `NumberRequester` gets a random number fact from the [numbersapi endpoint](http://numbersapi.com/). (Internally, it uses the `requests` API to make the REST call.) It makes a careful note of the results of each request in a log and returns a dictionary with the number and its associated fact.
+## Installation and Set Up 🛠️
+1. Ensure you have Python 3.10.6 installed. Make sure that your `pyenv` installation has this version available.
+2. 🍴 Fork and clone the repository to your local machine.
+3. install the required dependencies by running the following command:
+   ```bash
+   pip install -r requirements.txt#
+   ```
 
-### Example:
-In the REPL:
+## Project Description 📜
+This project explores the testing concepts of mocking and patching in Python.
+
+Mocks and patches are powerful testing tools in Python used to isolate units of code during testing. 
+
+A mock is an object that mimics the behavior of a real object in a controlled manner. It allows you to create a test double that stands in for the real object, enabling you to test the interactions with that object without actually invoking it.
+
+A patch is a way to temporarily replace an object or function in the code being tested with a mock. It is typically used to isolate the unit under test from external dependencies. Patches can be applied to classes, functions, or modules, allowing you to control what is returned or called during the test execution.
+
+The mocks and patches I use in this project are implemented to test the projects two main classes, NumberRequester and NumberCruncher, designed to interact with the numbersapi endpoint to retrieve and process random number facts.
+
+### NumberRequester Class 📞
+The NumberRequester class retrieves random number facts from the numbersapi endpoint using the requests API to make REST calls. It logs the results of each request and returns a dictionary with the number and its associated fact.
+
+Example:
+In the Python 🐍 REPL:
+
 ```python
 >>> from cruncher import NumberRequester
 >>> nr = NumberRequester()
 >>> nr.call()
 {'result': 'SUCCESS', 'number': 473, 'fact': '473 is the largest known number whose square and 4^{th} power use different digits.'}
+
 ```
 
-The `NumberCruncher` eats number facts, although it only has a limited capacity. When it is started you have to specify the size of its tummy (ie how many number facts it can store). It has a `NumberRequester` built in. To `crunch` a number, it uses the `NumberRequester` to get a number fact. It then does one of three things:
-1. It hates odd numbers, so if the number is odd, it just rejects it with a "Yuk!" message.
-1. If the number is even, and its tummy is not full, it happily eats the number fact and returns a "Yum!" message.
-1. If the number is even, and its tummy is full, it expels the oldest number fact from its tummy to make room for the new one. It returns a "Burp!" message.
+### NumberCruncher Class 🍔
+The NumberCruncher class simulates an entity that eats number facts with a limited tummy size. Upon initialization, you need to specify the size of its tummy (i.e., how many number facts it can store). It has a built-in NumberRequester for fetching number facts. When you call the crunch() method, it uses the NumberRequester to get a number fact and does one of the following:
 
-### Example:
-If we start a REPL, we should be able to do something like this:
+Rejects the fact with a "Yuk!" message if the number is odd.
+Eats the fact and returns a "Yum!" message if the number is even and its tummy is not full.
+Expels the oldest fact from its tummy to make room for the new one and returns a "Burp!" message if the number is even and its tummy is full.
+
+Example:
+In the Python 🐍 REPL:
+
 ```python
 >>> from cruncher import NumberCruncher
->>> nc = NumberCruncher(3) # a NumberCruncher that can store 3 facts
+>>> nc = NumberCruncher(3)  # A NumberCruncher that can store 3 facts
 >>> nc.crunch()
 'Yum! 8100'   # stored 8100. NumberRequester is invoked from within NumberCruncher
 >>> nc.crunch()
@@ -53,21 +72,6 @@ If we start a REPL, we should be able to do something like this:
 {'request_number': 3, 'call_time': '2022-11-09T16:38:37.810081', 'end_point': 'http://numbersapi.com/random/math', 'result': 'SUCCESS', 'number': 730},  
 {'request_number': 4, 'call_time': '2022-11-09T16:38:55.040040', 'end_point': 'http://numbersapi.com/random/math', 'result': 'SUCCESS', 'number': 436},  
 {'request_number': 5, 'call_time': '2022-11-09T16:39:07.712827', 'end_point': 'http://numbersapi.com/random/math', 'result': 'SUCCESS', 'number': 5624}]
+
+
 ```
-
-So this works but - shock!!! - it has no unit tests!!! This is, of course, unacceptable. Your task is to write some. Two test files have been prepared with some specifications for behaviour we want to test for - one file tests `NumberCruncher` and one tests `NumberRequester`. However, the tests have not been implemented. You should implement them, making use of mocking techniques. 
-
-### Task One - implement the tests in `test_cruncher.py`
-
-### Task Two - implement the tests in `test_requester.py`
-
-The code as written should pass the required tests. But if you complete those tests, feel free to write new ones making more rigorous checks on `NumberCruncher` and `NumberRequester` behaviour. If you think something is wrong, fix it!
-
-
-
-## Installation and Set Up
-1. You will need Python 3.10.6. Make sure that your `pyenv` installation has this available. 
-1. Fork and clone the repository. 
-1. Create a virtual environment.
-1. Activate the environment and run `pip install -r requirements.txt`
-1. Ensure that you can access the `cruncher` classes in the REPL as shown in the example above.
